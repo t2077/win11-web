@@ -1,0 +1,77 @@
+/* ============================================================
+   desktop.css — 壁纸层 / 桌面图标 / 框选
+   ============================================================ */
+
+.wallpaper-layer { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #05101c; }
+.wallpaper-img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  will-change: opacity;
+}
+.wallpaper-img[data-fit="fit"] { background-size: contain; background-color: #000; }
+.wallpaper-img[data-fit="stretch"] { background-size: 100% 100%; }
+.wallpaper-img[data-fit="tile"] { background-size: auto; background-repeat: repeat; }
+.wallpaper-img[data-fit="center"] { background-size: auto; }
+.wallpaper-img--next { opacity: 0; }
+
+/* 桌面区域（不含任务栏） */
+.desktop {
+  position: absolute; left: 0; right: 0; top: 0;
+  bottom: var(--taskbar-h);
+  z-index: 10;
+  outline: none;
+}
+.desktop-grid {
+  position: absolute; inset: 0;
+  --dt-cw: 78px; --dt-ch: 92px;
+}
+
+.dt-item {
+  position: absolute;
+  width: var(--dt-cw); height: var(--dt-ch);
+  padding: 6px 2px 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  border-radius: var(--r-sm);
+  outline: none;
+  cursor: default;
+  transition: background-color var(--dur-fast) linear;
+}
+.dt-item__icon { flex: none; display: grid; place-items: center; filter: drop-shadow(0 1px 2px rgba(0,0,0,.45)); }
+.dt-item__label {
+  width: 100%; text-align: center;
+  font-size: var(--fs-caption); line-height: 15px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,.85), 0 0 2px rgba(0,0,0,.7);
+  display: flex; justify-content: center;
+}
+.dt-item__label span {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; word-break: normal; overflow-wrap: break-word; line-break: anywhere;
+  padding: 0 2px; border-radius: 2px;
+}
+[data-theme="light"] .dt-item__label { color: #fff; }
+
+.dt-item:hover { background: rgba(255,255,255,.07); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.dt-item.is-selected {
+  background: color-mix(in srgb, var(--accent-base) 32%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-light2) 45%, transparent);
+}
+.dt-item.is-selected:hover { background: color-mix(in srgb, var(--accent-base) 42%, transparent); }
+.dt-item:focus-visible { box-shadow: inset 0 0 0 1px #fff; }
+.dt-item.is-dragging { opacity: .65; z-index: 20; }
+
+.dt-rename {
+  width: calc(100% - 4px); text-align: center;
+  border: 1px solid var(--accent-base); border-radius: 2px;
+  background: var(--bg-solid-4); color: var(--text-primary);
+  font-size: var(--fs-caption); line-height: 16px; padding: 1px 2px;
+  outline: none; user-select: text;
+}
+
+/* 框选矩形 */
+.marquee {
+  position: fixed; z-index: 50; pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--accent-light2) 80%, transparent);
+  background: color-mix(in srgb, var(--accent-base) 22%, transparent);
+  border-radius: 1px;
+}

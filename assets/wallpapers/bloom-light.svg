@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="skyL" cx="50%" cy="50%" r="72%">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="38%" stop-color="#e8f4ff"/>
+      <stop offset="72%" stop-color="#cfe6fb"/>
+      <stop offset="100%" stop-color="#a9cdf0"/>
+    </radialGradient>
+    <radialGradient id="coreL" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity=".98"/>
+      <stop offset="30%"  stop-color="#eaf9ff" stop-opacity=".75"/>
+      <stop offset="65%"  stop-color="#9fdcff" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#5eb8f0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="petalL" x1="0" y1="1" x2="0.3" y2="0">
+      <stop offset="0%"   stop-color="#1c6fd0" stop-opacity=".55"/>
+      <stop offset="35%"  stop-color="#3f9ee6" stop-opacity=".72"/>
+      <stop offset="72%"  stop-color="#8fd6f7" stop-opacity=".78"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity=".9"/>
+    </linearGradient>
+    <linearGradient id="petalL2" x1="0" y1="1" x2="0.5" y2="0">
+      <stop offset="0%"   stop-color="#0f4f9e" stop-opacity=".35"/>
+      <stop offset="60%"  stop-color="#61b6ec" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#eaf8ff" stop-opacity=".7"/>
+    </linearGradient>
+    <linearGradient id="edgeL" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity=".95"/>
+    </linearGradient>
+    <filter id="sB" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="12"/></filter>
+    <filter id="sM" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="sS" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.4"/></filter>
+    <filter id="grainL" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.04"/></feComponentTransfer>
+    </filter>
+    <g id="pL"><path d="M0 0 C -104 -132 -128 -286 -14 -418 C -4 -430 4 -430 14 -418 C 128 -286 104 -132 0 0 Z"/></g>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#skyL)"/>
+  <ellipse cx="960" cy="548" rx="720" ry="600" fill="url(#coreL)" opacity=".8" filter="url(#sB)"/>
+
+  <g transform="translate(960 556) rotate(-8)">
+    <g filter="url(#sM)" opacity=".75">
+      <g transform="rotate(28) scale(1.06)"><use href="#pL" fill="url(#petalL2)"/></g>
+      <g transform="rotate(96) scale(.98)"><use href="#pL" fill="url(#petalL2)"/></g>
+      <g transform="rotate(163) scale(1.02)"><use href="#pL" fill="url(#petalL2)"/></g>
+      <g transform="rotate(232) scale(.94)"><use href="#pL" fill="url(#petalL2)"/></g>
+      <g transform="rotate(300) scale(1.04)"><use href="#pL" fill="url(#petalL2)"/></g>
+    </g>
+    <g>
+      <g transform="rotate(-4)"><use href="#pL" fill="url(#petalL)" filter="url(#sS)"/>
+        <path d="M0 0 C -104 -132 -128 -286 -14 -418" fill="none" stroke="url(#edgeL)" stroke-width="2.6" opacity=".8"/></g>
+      <g transform="rotate(62) scale(.97)"><use href="#pL" fill="url(#petalL)" filter="url(#sS)"/>
+        <path d="M0 0 C -104 -132 -128 -286 -14 -418" fill="none" stroke="url(#edgeL)" stroke-width="2.2" opacity=".7"/></g>
+      <g transform="rotate(128) scale(1.01)"><use href="#pL" fill="url(#petalL)" filter="url(#sS)"/>
+        <path d="M0 0 C -104 -132 -128 -286 -14 -418" fill="none" stroke="url(#edgeL)" stroke-width="2" opacity=".6"/></g>
+      <g transform="rotate(196) scale(.93)"><use href="#pL" fill="url(#petalL)" filter="url(#sS)"/>
+        <path d="M0 0 C 104 -132 128 -286 14 -418" fill="none" stroke="url(#edgeL)" stroke-width="2" opacity=".6"/></g>
+      <g transform="rotate(262)"><use href="#pL" fill="url(#petalL)" filter="url(#sS)"/>
+        <path d="M0 0 C 104 -132 128 -286 14 -418" fill="none" stroke="url(#edgeL)" stroke-width="2.4" opacity=".75"/></g>
+      <g transform="rotate(322) scale(.95)"><use href="#pL" fill="url(#petalL)" filter="url(#sS)"/>
+        <path d="M0 0 C 104 -132 128 -286 14 -418" fill="none" stroke="url(#edgeL)" stroke-width="2" opacity=".6"/></g>
+    </g>
+    <circle r="130" fill="url(#coreL)"/>
+  </g>
+  <rect width="1920" height="1080" filter="url(#grainL)" opacity=".5" style="mix-blend-mode:multiply"/>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bgG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0620"/><stop offset="50%" stop-color="#120b33"/><stop offset="100%" stop-color="#05040f"/>
+    </linearGradient>
+    <linearGradient id="s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#00d4ff" stop-opacity="0"/><stop offset="50%" stop-color="#00d4ff" stop-opacity=".85"/><stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="s2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8a5cff" stop-opacity="0"/><stop offset="50%" stop-color="#8a5cff" stop-opacity=".8"/><stop offset="100%" stop-color="#8a5cff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="s3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ff4fa3" stop-opacity="0"/><stop offset="50%" stop-color="#ff4fa3" stop-opacity=".7"/><stop offset="100%" stop-color="#ff4fa3" stop-opacity="0"/></linearGradient>
+    <linearGradient id="s4" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4ee6c0" stop-opacity="0"/><stop offset="50%" stop-color="#4ee6c0" stop-opacity=".7"/><stop offset="100%" stop-color="#4ee6c0" stop-opacity="0"/></linearGradient>
+    <filter id="gb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="26"/></filter>
+    <filter id="gb2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="gr" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bgG)"/>
+  <g style="mix-blend-mode:screen">
+    <g filter="url(#gb)" opacity=".8">
+      <path d="M-100 700 C 400 400 700 900 1100 520 C 1450 190 1700 620 2050 380" stroke="url(#s1)" stroke-width="120" fill="none"/>
+      <path d="M-100 480 C 380 760 760 260 1180 700 C 1520 1060 1780 520 2050 760" stroke="url(#s2)" stroke-width="150" fill="none"/>
+      <path d="M-100 900 C 300 620 820 1060 1240 780 C 1600 540 1820 900 2050 640" stroke="url(#s3)" stroke-width="110" fill="none"/>
+      <path d="M-100 260 C 460 520 820 60 1300 320 C 1660 520 1840 200 2050 300" stroke="url(#s4)" stroke-width="90" fill="none"/>
+    </g>
+    <g filter="url(#gb2)" opacity=".95">
+      <path d="M-100 700 C 400 400 700 900 1100 520 C 1450 190 1700 620 2050 380" stroke="url(#s1)" stroke-width="6" fill="none"/>
+      <path d="M-100 480 C 380 760 760 260 1180 700 C 1520 1060 1780 520 2050 760" stroke="url(#s2)" stroke-width="5" fill="none"/>
+      <path d="M-100 900 C 300 620 820 1060 1240 780 C 1600 540 1820 900 2050 640" stroke="url(#s3)" stroke-width="4" fill="none"/>
+      <path d="M-100 260 C 460 520 820 60 1300 320 C 1660 520 1840 200 2050 300" stroke="url(#s4)" stroke-width="3" fill="none"/>
+    </g>
+  </g>
+  <radialGradient id="vg2" cx="50%" cy="50%" r="75%"><stop offset="50%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".6"/></radialGradient>
+  <rect width="1920" height="1080" fill="url(#vg2)"/>
+  <rect width="1920" height="1080" filter="url(#gr)" opacity=".6" style="mix-blend-mode:overlay"/>
+</svg>

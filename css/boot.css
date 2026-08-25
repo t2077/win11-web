@@ -1,0 +1,139 @@
+/* ============================================================
+   boot.css — 开机 / 锁屏 / 登录 / 关机
+   ============================================================ */
+
+/* ---------------- 开机 ---------------- */
+.boot-screen, .shutdown-screen {
+  position: fixed; inset: 0; z-index: 3000;
+  background: #000; color: #fff;
+  display: grid; place-items: center;
+}
+.boot-inner { display: flex; flex-direction: column; align-items: center; gap: 44px; }
+.boot-logo { filter: drop-shadow(0 0 24px rgba(80,180,255,.35)); }
+.boot-text { font-size: 15px; color: rgba(255,255,255,.85); letter-spacing: .02em; }
+
+/* Windows 环形点阵加载动画 */
+.boot-spinner { width: 64px; height: 64px; position: relative; }
+.dots { position: absolute; inset: 0; }
+.dots i {
+  position: absolute; left: 50%; top: 50%;
+  width: 5px; height: 5px; margin: -2.5px; border-radius: 50%;
+  background: #fff;
+  animation: orbit 2.1s cubic-bezier(.62,.13,.4,.91) infinite;
+}
+.dots i:nth-child(1) { animation-delay: 0s }
+.dots i:nth-child(2) { animation-delay: .13s }
+.dots i:nth-child(3) { animation-delay: .26s }
+.dots i:nth-child(4) { animation-delay: .39s }
+.dots i:nth-child(5) { animation-delay: .52s }
+@keyframes orbit {
+  0%   { transform: rotate(0deg) translateY(-26px); }
+  100% { transform: rotate(360deg) translateY(-26px); }
+}
+
+.shutdown-screen.is-sleep { background: #000; }
+.shutdown-screen.is-off .boot-inner { display: none; }
+.poweroff { position: absolute; inset: 0; display: grid; place-items: center; }
+
+/* ---------------- 锁屏 ---------------- */
+.lock-screen {
+  position: fixed; inset: 0; z-index: 2000;
+  overflow: hidden; color: #fff;
+}
+.lock-bg {
+  position: absolute; inset: -2%;
+  background-size: cover; background-position: center;
+  transition: filter var(--dur-slower) var(--ease-soft), transform var(--dur-slower) var(--ease-soft);
+}
+.lock-screen.is-login .lock-bg { filter: blur(28px) brightness(.62); transform: scale(1.06); }
+.lock-scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.05) 45%, rgba(0,0,0,.45) 100%);
+}
+
+.lock-content {
+  position: absolute; left: 56px; bottom: 92px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.55);
+}
+.lock-time {
+  font-family: var(--font-display);
+  font-size: 104px; line-height: 1.02; font-weight: 600;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+}
+.lock-date { font-family: var(--font-display); font-size: 30px; font-weight: 600; margin-top: 4px; }
+.lock-status { margin-top: 18px; font-size: 14px; color: rgba(255,255,255,.85); }
+.lock-hint {
+  position: absolute; left: 0; right: 0; bottom: -56px;
+  font-size: 13px; color: rgba(255,255,255,.7);
+  animation: lockHint 3s ease-in-out infinite;
+}
+@keyframes lockHint { 0%,100% { opacity: .45 } 50% { opacity: .9 } }
+
+/* ---------------- 登录 ---------------- */
+.login-content {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+}
+.login-user { display: flex; flex-direction: column; align-items: center; }
+.login-avatar {
+  width: 100px; height: 100px; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.18);
+  display: grid; place-items: center; background: rgba(255,255,255,.1);
+}
+.login-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.login-name {
+  margin-top: 22px; font-family: var(--font-display);
+  font-size: 28px; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,.5);
+}
+.login-pin { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.login-input-wrap {
+  display: flex; align-items: center;
+  width: 268px; height: 36px;
+  border-radius: var(--r-sm);
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  overflow: hidden;
+}
+.login-input {
+  flex: 1; min-width: 0; height: 100%;
+  border: 0; outline: 0; background: transparent;
+  padding: 0 12px; color: #1b1b1b;
+  font-size: 15px; letter-spacing: .35em;
+  user-select: text;
+}
+.login-input::placeholder { color: #6a6a6a; letter-spacing: normal; }
+.login-submit {
+  width: 40px; height: 100%; flex: none;
+  background: rgba(0,0,0,.06);
+  position: relative;
+}
+.login-submit::after {
+  content: ''; position: absolute; inset: 0; margin: auto;
+  width: 10px; height: 10px;
+  border-right: 1.6px solid #1b1b1b; border-top: 1.6px solid #1b1b1b;
+  transform: rotate(45deg) translate(-1px,1px);
+}
+.login-submit:hover { background: rgba(0,0,0,.12); }
+.login-sub, .login-options {
+  font-size: 13px; color: rgba(255,255,255,.85);
+  text-shadow: 0 1px 6px rgba(0,0,0,.5);
+}
+.login-options { margin-top: 34px; }
+.login-sub:hover, .login-options:hover { text-decoration: underline; }
+.login-welcome {
+  margin-top: 32px; font-size: 18px; color: rgba(255,255,255,.92);
+  text-shadow: 0 1px 8px rgba(0,0,0,.5);
+  animation: fadeIn .4s linear;
+}
+
+.lock-tray {
+  position: absolute; right: 24px; bottom: 22px;
+  display: flex; gap: 6px;
+}
+.lock-tray__btn {
+  width: 40px; height: 40px; border-radius: var(--r-sm);
+  display: grid; place-items: center; color: #fff;
+  transition: background-color var(--dur-fast) linear;
+}
+.lock-tray__btn:hover { background: rgba(255,255,255,.14); }

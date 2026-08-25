@@ -1,0 +1,201 @@
+/* ============================================================
+   taskbar.css — Windows 11 任务栏
+   ============================================================ */
+
+.taskbar {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: var(--taskbar-h);
+  z-index: 300;
+  display: flex; align-items: center;
+  transition: transform var(--dur-normal) var(--ease-decel);
+  user-select: none;
+}
+.taskbar.is-hidden { transform: translateY(100%); }
+.taskbar__bg {
+  position: absolute; inset: 0;
+  background-color: var(--taskbar-tint);
+  backdrop-filter: var(--acrylic-blur);
+  -webkit-backdrop-filter: var(--acrylic-blur);
+  border-top: 1px solid var(--stroke-divider);
+}
+.taskbar__bg::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: var(--noise-url); opacity: var(--noise-opacity); mix-blend-mode: overlay;
+}
+[data-theme="dark"] .taskbar[data-accent="on"] .taskbar__bg { background-color: color-mix(in srgb, var(--accent-dark2) 72%, var(--taskbar-tint)); }
+[data-theme="light"] .taskbar[data-accent="on"] .taskbar__bg { background-color: color-mix(in srgb, var(--accent-base) 55%, var(--taskbar-tint)); }
+
+.taskbar__section { position: relative; z-index: 1; display: flex; align-items: center; height: 100%; }
+.taskbar__section--left { position: absolute; left: 0; padding-left: 4px; }
+.taskbar__section--right { position: absolute; right: 0; }
+.taskbar__section--center {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  gap: 0; transition: left var(--dur-normal) var(--ease-decel), transform var(--dur-normal) var(--ease-decel);
+}
+.taskbar[data-align="left"] .taskbar__section--center { position: relative; left: 0; transform: none; margin-left: 4px; }
+.taskbar[data-align="left"] .taskbar__section--left { position: relative; order: 2; }
+
+/* ---------------- 通用任务栏按钮 ---------------- */
+.tb-btn {
+  position: relative;
+  width: 40px; height: 40px; margin: 0 2px;
+  border-radius: var(--r-sm);
+  display: grid; place-items: center;
+  color: var(--text-primary);
+  transition: background-color var(--dur-fast) linear;
+  cursor: default;
+}
+.tb-btn > .svg-icon, .tb-app__icon { transition: transform var(--dur-normal) var(--ease-back); }
+.tb-btn:hover { background: var(--fill-subtle-hover); }
+.tb-btn:hover > .svg-icon, .tb-btn:hover .tb-app__icon { transform: translateY(-1px); }
+.tb-btn:active { background: var(--fill-subtle-press); }
+.tb-btn:active > .svg-icon, .tb-btn:active .tb-app__icon { transform: scale(.9); }
+.tb-btn.is-open { background: var(--fill-subtle-sel); }
+[data-theme="dark"] .taskbar { --fill-subtle-hover: rgba(255,255,255,.0837); --fill-subtle-press: rgba(255,255,255,.0605); }
+
+.taskbar[data-size="small"] .tb-btn { width: 34px; height: 34px; }
+
+/* 开始按钮 */
+.tb-start .svg-icon { width: 24px; height: 24px; }
+
+/* 搜索框形态 */
+.tb-searchbox {
+  height: 32px; margin: 0 4px; padding: 0 14px 0 12px;
+  display: flex; align-items: center; gap: 8px;
+  border-radius: var(--r-pill);
+  background: var(--fill-control);
+  box-shadow: inset 0 0 0 1px var(--stroke-control-2);
+  color: var(--text-secondary); font-size: var(--fs-body);
+  transition: background-color var(--dur-fast) linear;
+}
+.tb-searchbox:hover { background: var(--fill-control-hover); }
+.tb-searchbox.is-open { background: var(--fill-control-hover); }
+
+/* 小组件（天气胶囊） */
+.tb-widgets {
+  height: 40px; padding: 0 12px 0 8px; margin-left: 2px;
+  display: flex; align-items: center; gap: 8px;
+  border-radius: var(--r-sm);
+  color: var(--text-primary);
+  transition: background-color var(--dur-fast) linear;
+}
+.tb-widgets:hover { background: var(--fill-subtle-hover); }
+.tb-widgets.is-open { background: var(--fill-subtle-sel); }
+.tb-widgets__txt { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.15; }
+.tb-widgets__t { font-size: var(--fs-caption); font-weight: 600; }
+.tb-widgets__d { font-size: 11px; color: var(--text-secondary); }
+
+/* ---------------- 应用按钮 ---------------- */
+.tb-apps { display: flex; align-items: center; }
+.tb-app { position: relative; }
+.tb-app__icon { width: 24px; height: 24px; display: grid; place-items: center; }
+.tb-app__ind {
+  position: absolute; bottom: 2px; left: 50%;
+  width: 0; height: 3px; border-radius: 2px;
+  background: var(--accent-light2);
+  transform: translateX(-50%);
+  transition: width var(--dur-normal) var(--ease-decel), opacity var(--dur-fast) linear, background-color var(--dur-fast) linear;
+  opacity: 0;
+}
+[data-theme="light"] .tb-app__ind { background: var(--accent-dark1); }
+.tb-app.is-running .tb-app__ind { width: 12px; opacity: .55; }
+.tb-app.is-active .tb-app__ind { width: 17px; opacity: 1; }
+.tb-app.is-running:hover .tb-app__ind { width: 17px; opacity: .85; }
+/* 多窗口：指示条带"分段"暗示 */
+.tb-app.is-multi::after {
+  content: ''; position: absolute; inset: 2px; border-radius: var(--r-sm);
+  box-shadow: inset 0 0 0 1px var(--stroke-control);
+  pointer-events: none;
+}
+.tb-app.is-running:not(.is-active) { background: rgba(255,255,255,.04); }
+[data-theme="light"] .tb-app.is-running:not(.is-active) { background: rgba(255,255,255,.35); }
+.tb-app.is-active { background: var(--fill-subtle-sel); }
+
+/* ---------------- 系统托盘 ---------------- */
+.tb-tray-btn {
+  height: 40px; min-width: 28px; padding: 0 6px; margin: 0 1px;
+  border-radius: var(--r-sm); display: grid; place-items: center;
+  color: var(--text-primary);
+  transition: background-color var(--dur-fast) linear;
+}
+.tb-tray-btn:hover { background: var(--fill-subtle-hover); }
+.tb-tray-chev { min-width: 24px; }
+.tb-ime span { font-size: var(--fs-caption); }
+
+.tb-tray-group {
+  height: 40px; padding: 0 8px; margin: 0 2px;
+  display: flex; align-items: center; gap: 8px;
+  border-radius: var(--r-sm); color: var(--text-primary);
+  transition: background-color var(--dur-fast) linear;
+}
+.tb-tray-group:hover { background: var(--fill-subtle-hover); }
+.tb-tray-group.is-open { background: var(--fill-subtle-sel); }
+.tb-tray-ico { width: 16px; height: 16px; display: grid; place-items: center; }
+
+.tb-tray-clock {
+  position: relative;
+  height: 40px; padding: 0 10px; margin-right: 2px;
+  display: flex; flex-direction: row; align-items: center; justify-content: flex-end;
+  gap: 8px; border-radius: var(--r-sm);
+  color: var(--text-primary); font-size: var(--fs-caption); line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+  transition: background-color var(--dur-fast) linear;
+}
+.tb-clock__col { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; pointer-events: none; }
+.tb-tray-clock:hover { background: var(--fill-subtle-hover); }
+.tb-tray-clock.is-open { background: var(--fill-subtle-sel); }
+.tb-clock__t, .tb-clock__d { pointer-events: none; white-space: nowrap; }
+.tb-badge {
+  flex: none;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  border-radius: 8px; background: var(--fill-accent); color: var(--text-onaccent);
+  font-size: 10px; line-height: 16px; text-align: center; font-weight: 600;
+  pointer-events: none;
+}
+
+.tb-showdesktop {
+  width: 8px; height: 100%; margin-left: 2px;
+  border-left: 1px solid var(--stroke-divider);
+  transition: background-color var(--dur-fast) linear;
+}
+.tb-showdesktop:hover { background: var(--fill-subtle-hover); }
+
+/* ---------------- 任务栏悬停预览 ---------------- */
+.tb-preview {
+  position: absolute; z-index: 530;
+  display: flex; gap: 8px; padding: 8px;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-flyout), inset 0 0 0 1px var(--stroke-surface);
+  max-width: 80vw; overflow-x: auto;
+}
+.tb-preview__card {
+  width: 168px; border-radius: var(--r-md); padding: 6px;
+  background: var(--fill-subtle);
+  transition: background-color var(--dur-fast) linear;
+  cursor: default;
+}
+.tb-preview__card:hover { background: var(--fill-subtle-hover); }
+.tb-preview__head { display: flex; align-items: center; gap: 6px; font-size: var(--fs-caption); color: var(--text-secondary); padding: 2px 2px 6px; }
+.tb-preview__head .truncate { flex: 1; }
+.tb-preview__x { width: 18px; height: 18px; border-radius: 3px; display: grid; place-items: center; color: var(--text-secondary); }
+.tb-preview__x:hover { background: var(--caption-close-hover); color: #fff; }
+.tb-preview__thumb {
+  height: 92px; border-radius: var(--r-sm);
+  background: var(--fill-control); display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1px var(--stroke-control);
+}
+.window.is-peek { outline: 2px solid var(--fill-accent); outline-offset: -2px; }
+
+/* ---------------- 隐藏图标浮出 ---------------- */
+.tray-hidden {
+  position: absolute; z-index: 530;
+  display: flex; gap: 4px; padding: 8px;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-flyout), inset 0 0 0 1px var(--stroke-surface);
+}
+.tray-hidden__btn {
+  width: 34px; height: 34px; border-radius: var(--r-sm);
+  display: grid; place-items: center; color: var(--text-primary);
+  transition: background-color var(--dur-fast) linear;
+}
+.tray-hidden__btn:hover { background: var(--fill-subtle-hover); }

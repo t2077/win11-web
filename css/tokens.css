@@ -1,0 +1,225 @@
+/* ============================================================
+   tokens.css — Fluent 2 / Windows 11 设计令牌
+   颜色、排版、圆角、阴影、材质、动效曲线
+   ============================================================ */
+
+/* ---------- 字体 ---------- */
+@font-face {
+  font-family: 'Win11Icons';
+  src: local('Segoe Fluent Icons'), local('Segoe MDL2 Assets');
+  font-display: block;
+}
+
+:root {
+  /* 排版 —— Windows 11 使用 Segoe UI Variable */
+  --font-ui: "Segoe UI Variable Text", "Segoe UI Variable Static Text", "Segoe UI",
+             system-ui, "Microsoft YaHei UI", "PingFang SC", "Noto Sans SC", sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI Variable Static Display",
+                  "Segoe UI Semibold", "Segoe UI", system-ui, "Microsoft YaHei UI", sans-serif;
+  --font-mono: "Cascadia Mono", "Cascadia Code", Consolas, "Courier New", monospace;
+  --font-icon: 'Win11Icons', "Segoe Fluent Icons", "Segoe MDL2 Assets", sans-serif;
+
+  --fs-caption: 12px;   --lh-caption: 16px;
+  --fs-body:    14px;   --lh-body:    20px;
+  --fs-body-lg: 18px;   --lh-body-lg: 24px;
+  --fs-subtitle:20px;   --lh-subtitle:28px;
+  --fs-title:   28px;   --lh-title:   36px;
+  --fs-title-lg:40px;   --lh-title-lg:52px;
+  --fs-display: 68px;   --lh-display: 92px;
+
+  /* 圆角 */
+  --r-sm: 4px;
+  --r-md: 7px;
+  --r-lg: 8px;
+  --r-xl: 12px;
+  --r-window: 8px;
+  --r-pill: 999px;
+
+  /* 尺寸 */
+  --taskbar-h: 48px;
+  --titlebar-h: 32px;
+  --caption-btn-w: 46px;
+
+  /* 动效曲线 (Fluent 2 Motion) */
+  --ease-accel: cubic-bezier(0.7, 0, 1, 0.5);
+  --ease-decel: cubic-bezier(0.1, 0.9, 0.2, 1);
+  --ease-standard: cubic-bezier(0.8, 0, 0.2, 1);
+  --ease-soft: cubic-bezier(0.33, 0, 0.67, 1);
+  --ease-back: cubic-bezier(0.34, 1.32, 0.64, 1);
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-normal: 250ms;
+  --dur-slow: 350ms;
+  --dur-slower: 500ms;
+
+  /* 强调色（默认 Windows 蓝） */
+  --accent-base: #0078d4;
+  --accent-dark1: #005fb8;
+  --accent-dark2: #003e92;
+  --accent-dark3: #002b60;
+  --accent-light1: #2d9bef;
+  --accent-light2: #60ccff;
+  --accent-light3: #99ebff;
+
+  --shadow-flyout: 0 8px 16px rgba(0,0,0,.14);
+  --shadow-dialog: 0 32px 64px rgba(0,0,0,.19), 0 2px 21px rgba(0,0,0,.15);
+  --shadow-window: 0 26px 58px rgba(0,0,0,.22), 0 2px 12px rgba(0,0,0,.18);
+  --shadow-window-inactive: 0 12px 28px rgba(0,0,0,.12), 0 2px 6px rgba(0,0,0,.10);
+  --shadow-tooltip: 0 4px 8px rgba(0,0,0,.14);
+}
+
+/* =========================== 深色主题 =========================== */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --text-primary:   #ffffff;
+  --text-secondary: rgba(255,255,255,.786);
+  --text-tertiary:  rgba(255,255,255,.5442);
+  --text-disabled:  rgba(255,255,255,.3628);
+  --text-onaccent:  #000000;
+  --text-onaccent-secondary: rgba(0,0,0,.5);
+  --text-accent:    var(--accent-light3);
+  --text-accent-2:  var(--accent-light2);
+
+  --fill-control:       rgba(255,255,255,.0605);
+  --fill-control-hover: rgba(255,255,255,.0837);
+  --fill-control-press: rgba(255,255,255,.0326);
+  --fill-control-disabled: rgba(255,255,255,.0419);
+  --fill-control-strong: rgba(255,255,255,.5442);
+  --fill-control-alt:   rgba(255,255,255,.0419);
+  --fill-control-alt-hover: rgba(255,255,255,.0605);
+
+  --fill-subtle:        transparent;
+  --fill-subtle-hover:  rgba(255,255,255,.0605);
+  --fill-subtle-press:  rgba(255,255,255,.0419);
+  --fill-subtle-sel:    rgba(255,255,255,.1);
+
+  --fill-accent:        var(--accent-light2);
+  --fill-accent-hover:  #52bdec;
+  --fill-accent-press:  #4aabd4;
+  --fill-accent-disabled: rgba(255,255,255,.1581);
+  --fill-accent-subtle: rgba(96,205,255,.15);
+
+  --bg-solid:      #202020;
+  --bg-solid-2:    #1c1c1c;
+  --bg-solid-3:    #282828;
+  --bg-solid-4:    #2c2c2c;
+  --bg-card:       rgba(255,255,255,.0512);
+  --bg-card-2:     rgba(255,255,255,.0326);
+  --bg-card-hover: rgba(255,255,255,.0837);
+  --bg-layer:      rgba(58,58,58,.3);
+  --bg-layer-alt:  rgba(0,0,0,.1);
+  --bg-smoke:      rgba(0,0,0,.3);
+
+  --stroke-control:  rgba(255,255,255,.0698);
+  --stroke-control-2:rgba(255,255,255,.093);
+  --stroke-control-strong: rgba(255,255,255,.5442);
+  --stroke-card:     rgba(255,255,255,.0578);
+  --stroke-divider:  rgba(255,255,255,.0837);
+  --stroke-surface:  rgba(117,117,117,.4);
+  --stroke-focus:    #ffffff;
+  --stroke-focus-inner: #000000;
+
+  /* 材质 */
+  --acrylic-tint: rgba(44,44,44,.72);
+  --acrylic-tint-strong: rgba(32,32,32,.86);
+  --acrylic-blur: blur(60px) saturate(1.25) brightness(1.02);
+  --mica-tint: rgba(32,32,32,.78);
+  --mica-alt-tint: rgba(26,26,26,.84);
+  --mica-blur: blur(90px) saturate(1.6) brightness(.9);
+  --taskbar-tint: rgba(32,32,32,.72);
+  --menu-tint: rgba(43,43,43,.78);
+  --tooltip-bg: #2b2b2b;
+  --scrollbar-thumb: rgba(255,255,255,.28);
+  --scrollbar-thumb-hover: rgba(255,255,255,.42);
+  --noise-opacity: .022;
+  --caption-close-hover: #c42b1c;
+  --caption-close-press: #b2251a;
+}
+
+/* =========================== 浅色主题 =========================== */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --text-primary:   rgba(0,0,0,.8956);
+  --text-secondary: rgba(0,0,0,.6063);
+  --text-tertiary:  rgba(0,0,0,.4458);
+  --text-disabled:  rgba(0,0,0,.3614);
+  --text-onaccent:  #ffffff;
+  --text-onaccent-secondary: rgba(255,255,255,.7);
+  --text-accent:    var(--accent-dark2);
+  --text-accent-2:  var(--accent-dark1);
+
+  --fill-control:       rgba(255,255,255,.7);
+  --fill-control-hover: rgba(249,249,249,.5);
+  --fill-control-press: rgba(249,249,249,.3);
+  --fill-control-disabled: rgba(249,249,249,.3);
+  --fill-control-strong: rgba(0,0,0,.4458);
+  --fill-control-alt:   rgba(0,0,0,.0241);
+  --fill-control-alt-hover: rgba(0,0,0,.0578);
+
+  --fill-subtle:        transparent;
+  --fill-subtle-hover:  rgba(0,0,0,.0373);
+  --fill-subtle-press:  rgba(0,0,0,.0241);
+  --fill-subtle-sel:    rgba(0,0,0,.0578);
+
+  --fill-accent:        var(--accent-dark1);
+  --fill-accent-hover:  #1a6cc0;
+  --fill-accent-press:  #3a7dc4;
+  --fill-accent-disabled: rgba(0,0,0,.2169);
+  --fill-accent-subtle: rgba(0,120,212,.12);
+
+  --bg-solid:      #f3f3f3;
+  --bg-solid-2:    #eeeeee;
+  --bg-solid-3:    #f9f9f9;
+  --bg-solid-4:    #ffffff;
+  --bg-card:       rgba(255,255,255,.7);
+  --bg-card-2:     rgba(246,246,246,.5);
+  --bg-card-hover: rgba(249,249,249,.5);
+  --bg-layer:      rgba(255,255,255,.5);
+  --bg-layer-alt:  rgba(255,255,255,1);
+  --bg-smoke:      rgba(0,0,0,.3);
+
+  --stroke-control:  rgba(0,0,0,.0578);
+  --stroke-control-2:rgba(0,0,0,.1622);
+  --stroke-control-strong: rgba(0,0,0,.4458);
+  --stroke-card:     rgba(0,0,0,.0578);
+  --stroke-divider:  rgba(0,0,0,.0803);
+  --stroke-surface:  rgba(117,117,117,.4);
+  --stroke-focus:    #000000;
+  --stroke-focus-inner: #ffffff;
+
+  --acrylic-tint: rgba(252,252,252,.72);
+  --acrylic-tint-strong: rgba(243,243,243,.9);
+  --acrylic-blur: blur(60px) saturate(1.25) brightness(1.04);
+  --mica-tint: rgba(243,243,243,.8);
+  --mica-alt-tint: rgba(238,238,238,.86);
+  --mica-blur: blur(90px) saturate(1.4) brightness(1.1);
+  --taskbar-tint: rgba(243,243,243,.72);
+  --menu-tint: rgba(249,249,249,.8);
+  --tooltip-bg: #f9f9f9;
+  --scrollbar-thumb: rgba(0,0,0,.24);
+  --scrollbar-thumb-hover: rgba(0,0,0,.36);
+  --noise-opacity: .015;
+  --caption-close-hover: #c42b1c;
+  --caption-close-press: #b2251a;
+}
+
+/* 透明效果关闭时（设置 → 个性化 → 颜色 → 透明效果） */
+[data-transparency="off"] {
+  --acrylic-blur: none;
+  --mica-blur: none;
+  --acrylic-tint: var(--bg-solid-4);
+  --acrylic-tint-strong: var(--bg-solid);
+  --mica-tint: var(--bg-solid);
+  --mica-alt-tint: var(--bg-solid-2);
+  --taskbar-tint: var(--bg-solid-2);
+  --menu-tint: var(--bg-solid-4);
+  --noise-opacity: 0;
+}
+
+/* 动画关闭时 */
+[data-animations="off"] * {
+  animation-duration: 1ms !important;
+  transition-duration: 1ms !important;
+}

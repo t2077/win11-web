@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<title>Windows 11</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="author" content="B站 UP 主 https://space.bilibili.com/447553626">
+<meta name="description" content="Win11 网页版 — 原创作者：B站 UP 主 space.bilibili.com/447553626">
+<!--
+  ============ 原创作者声明 ============
+  本项目由 B站 UP 主 创作/维护。
+  原作者主页：https://space.bilibili.com/447553626
+  请尊重原作者劳动成果，保留此署名。
+  转载 / 使用请注明出处。
+  ======================================
+-->
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/boot.css">
+<link rel="stylesheet" href="css/desktop.css">
+<link rel="stylesheet" href="css/window.css">
+<link rel="stylesheet" href="css/taskbar.css">
+<link rel="stylesheet" href="css/flyouts.css">
+<link rel="stylesheet" href="css/contextmenu.css">
+<link rel="stylesheet" href="css/apps.css">
+<script>
+/* 开发诊断：?debug=1 时把脚本错误显示在屏幕上，便于截图排查 */
+window.__ERRORS__ = [];
+(function () {
+  var show = /[?&]debug=1/.test(location.search);
+  function push(msg) {
+    window.__ERRORS__.push(msg);
+    if (!show) return;
+    var box = document.getElementById('__errbox');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = '__errbox';
+      box.style.cssText = 'position:fixed;left:0;top:0;right:0;max-height:45vh;overflow:auto;z-index:99999;' +
+        'background:rgba(140,0,0,.94);color:#fff;font:12px/1.5 Consolas,monospace;padding:8px 12px;white-space:pre-wrap';
+      (document.body || document.documentElement).appendChild(box);
+    }
+    box.textContent = window.__ERRORS__.length + ' 个错误:\n' + window.__ERRORS__.join('\n');
+  }
+  window.addEventListener('error', function (e) {
+    push('[' + String(e.filename || '').split('/').pop() + ':' + e.lineno + '] ' + (e.message || e.error));
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    push('[promise] ' + (e.reason && (e.reason.stack || e.reason.message) || e.reason));
+  });
+  var ce = console.error;
+  console.error = function () { push('[console] ' + Array.prototype.join.call(arguments, ' ')); ce.apply(console, arguments); };
+})();
+</script>
+</head>
+<body>
+
+<!-- ================= 桌面根容器 ================= -->
+<div id="os" class="os" aria-hidden="false">
+
+  <!-- 壁纸层 -->
+  <div id="wallpaper" class="wallpaper-layer">
+    <div class="wallpaper-img" id="wallpaperImg"></div>
+    <div class="wallpaper-img wallpaper-img--next" id="wallpaperImgNext"></div>
+  </div>
+
+  <!-- 桌面图标层 -->
+  <main id="desktop" class="desktop" tabindex="-1">
+    <div id="desktopGrid" class="desktop-grid"></div>
+    <div id="marquee" class="marquee" hidden></div>
+  </main>
+
+  <!-- 窗口层 -->
+  <div id="windowLayer" class="window-layer"></div>
+
+  <!-- Snap 贴靠预览遮罩 -->
+  <div id="snapPreview" class="snap-preview" hidden><div class="snap-preview__box"></div></div>
+
+  <!-- 全屏覆盖层（任务视图 / Alt+Tab / Snap 助手） -->
+  <div id="overlayLayer" class="overlay-layer"></div>
+
+  <!-- 浮出控件层（开始菜单 / 搜索 / 小组件 / 快速设置 / 通知中心） -->
+  <div id="flyoutLayer" class="flyout-layer"></div>
+
+  <!-- 任务栏 -->
+  <div id="taskbar" class="taskbar" data-align="center">
+    <div class="taskbar__bg"></div>
+    <div class="taskbar__section taskbar__section--left" id="taskbarLeft"></div>
+    <div class="taskbar__section taskbar__section--center" id="taskbarCenter"></div>
+    <div class="taskbar__section taskbar__section--right" id="taskbarRight"></div>
+  </div>
+
+  <!-- 通知气泡层 -->
+  <div id="toastLayer" class="toast-layer"></div>
+
+  <!-- 上下文菜单层 -->
+  <div id="menuLayer" class="menu-layer"></div>
+
+  <!-- 拖拽幽灵层 -->
+  <div id="dragLayer" class="drag-layer"></div>
+</div>
+
+<!-- ================= 启动 / 锁屏 / 登录 ================= -->
+<div id="bootScreen" class="boot-screen">
+  <div class="boot-inner">
+    <div class="boot-logo" id="bootLogo"></div>
+    <div class="boot-spinner" id="bootSpinner"><div class="dots"></div></div>
+    <div class="boot-text" id="bootText"></div>
+  </div>
+</div>
+
+<div id="lockScreen" class="lock-screen" hidden>
+  <div class="lock-bg" id="lockBg"></div>
+  <div class="lock-scrim"></div>
+  <div class="lock-content" id="lockContent">
+    <div class="lock-clock">
+      <div class="lock-time" id="lockTime">--:--</div>
+      <div class="lock-date" id="lockDate">--</div>
+    </div>
+    <div class="lock-status" id="lockStatus"></div>
+    <div class="lock-hint">按任意键或点击以解锁</div>
+  </div>
+  <div class="login-content" id="loginContent" hidden>
+    <div class="login-user">
+      <div class="login-avatar" id="loginAvatar"></div>
+      <div class="login-name" id="loginName">用户</div>
+      <form class="login-pin" id="loginForm" autocomplete="off">
+        <div class="login-input-wrap">
+          <input type="password" id="loginPin" class="login-input" placeholder="PIN" inputmode="numeric" maxlength="6" aria-label="PIN">
+          <button type="submit" class="login-submit" id="loginSubmit" title="提交" aria-label="提交"></button>
+        </div>
+        <div class="login-sub">我忘记了我的 PIN</div>
+        <div class="login-options">登录选项</div>
+      </form>
+      <div class="login-welcome" id="loginWelcome" hidden>欢迎</div>
+    </div>
+  </div>
+  <div class="lock-tray" id="lockTray"></div>
+</div>
+
+<div id="shutdownScreen" class="shutdown-screen" hidden>
+  <div class="boot-inner">
+    <div class="boot-spinner"><div class="dots"></div></div>
+    <div class="boot-text" id="shutdownText">正在关机</div>
+  </div>
+</div>
+
+<!-- 全局音频（UI 音效由 WebAudio 合成，无外部依赖） -->
+
+<!-- ================= 脚本 ================= -->
+<script src="js/core/util.js"></script>
+<script src="js/core/icons.js"></script>
+<script src="js/core/sound.js"></script>
+<script src="js/core/state.js"></script>
+<script src="js/core/vfs.js"></script>
+<script src="js/core/registry.js"></script>
+<script src="js/core/wm.js"></script>
+<script src="js/core/contextmenu.js"></script>
+<script src="js/ui/flyout.js"></script>
+<script src="js/ui/desktop.js"></script>
+<script src="js/ui/taskbar.js"></script>
+<script src="js/ui/start.js"></script>
+<script src="js/ui/search.js"></script>
+<script src="js/ui/widgets.js"></script>
+<script src="js/ui/quicksettings.js"></script>
+<script src="js/ui/notifications.js"></script>
+<script src="js/ui/taskview.js"></script>
+<script src="js/ui/shortcuts.js"></script>
+<script src="js/apps/explorer.js"></script>
+<script src="js/apps/settings.js"></script>
+<script src="js/apps/notepad.js"></script>
+<script src="js/apps/calculator.js"></script>
+<script src="js/apps/terminal.js"></script>
+<script src="js/apps/paint.js"></script>
+<script src="js/apps/photos.js"></script>
+<script src="js/apps/edge.js"></script>
+<script src="js/apps/store.js"></script>
+<script src="js/apps/taskmgr.js"></script>
+<script src="js/apps/mediaplayer.js"></script>
+<script src="js/apps/clock.js"></script>
+<script src="js/apps/calendar.js"></script>
+<script src="js/apps/minesweeper.js"></script>
+<script src="js/apps/misc.js"></script>
+<script src="js/boot.js"></script>
+
+<!-- ================= 原创作者角标（可点击跳转 B 站） ================= -->
+<style>
+  .credit-badge{position:fixed;z-index:2147483000;display:flex;align-items:center;gap:7px;padding:7px 13px;background:rgba(32,32,32,.82);color:#eaeaea;font:12px/1.4 'Segoe UI',system-ui,'Microsoft YaHei',sans-serif;border:1px solid rgba(255,255,255,.16);border-radius:999px;backdrop-filter:blur(9px);box-shadow:0 4px 16px rgba(0,0,0,.4);text-decoration:none;user-select:none;transition:background .18s,color .18s,transform .18s}
+  .credit-badge:hover{background:rgba(0,103,192,.92);color:#fff;transform:translateY(-1px)}
+  .credit-badge .c-dot{width:8px;height:8px;border-radius:50%;background:#0ac922;box-shadow:0 0 0 0 rgba(10,201,34,.6);animation:c-pulse 2s infinite}
+  .credit-badge b{font-weight:600}
+  @keyframes c-pulse{0%{box-shadow:0 0 0 0 rgba(10,201,34,.55)}70%{box-shadow:0 0 0 6px rgba(10,201,34,0)}100%{box-shadow:0 0 0 0 rgba(10,201,34,0)}}
+  .credit-badge--br{right:14px;top:14px}
+  .credit-badge--bl{left:14px;bottom:56px;font-size:11px;opacity:.92}
+  @media (max-width:640px){.credit-badge--bl{display:none}}
+</style>
+<a class="credit-badge credit-badge--br" href="https://space.bilibili.com/447553626" target="_blank" rel="noopener noreferrer" title="原创作者 B站主页">
+  <span class="c-dot"></span>
+  <span>原创作者 · <b>B站</b> <b>space.bilibili.com/447553626</b></span>
+</a>
+<a class="credit-badge credit-badge--bl" href="https://space.bilibili.com/447553626" target="_blank" rel="noopener noreferrer" title="原创作者 B站主页">
+  <span class="c-dot"></span>
+  <span>原创 · <b>@ space.bilibili.com/447553626</b></span>
+</a>
+</body>
+</html>

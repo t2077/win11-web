@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0b1330"/>
+      <stop offset="28%"  stop-color="#222a5c"/>
+      <stop offset="52%"  stop-color="#6a4b7e"/>
+      <stop offset="70%"  stop-color="#d1746a"/>
+      <stop offset="84%"  stop-color="#f2a95f"/>
+      <stop offset="100%" stop-color="#ffd79a"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff6dd" stop-opacity="1"/>
+      <stop offset="35%" stop-color="#ffd489" stop-opacity=".8"/>
+      <stop offset="100%" stop-color="#ff9a52" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5b4a72"/><stop offset="100%" stop-color="#2f2748"/></linearGradient>
+    <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b3155"/><stop offset="100%" stop-color="#211c38"/></linearGradient>
+    <linearGradient id="m3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#211c34"/><stop offset="100%" stop-color="#100d1e"/></linearGradient>
+    <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5c4a68"/><stop offset="40%" stop-color="#2a2340"/><stop offset="100%" stop-color="#15111f"/></linearGradient>
+    <filter id="hz" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="18"/></filter>
+    <filter id="hz2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="gr3" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#sky2)"/>
+  <!-- 星星 -->
+  <g fill="#fff" opacity=".65">
+    <circle cx="180" cy="90" r="1.6"/><circle cx="420" cy="150" r="1.2"/><circle cx="700" cy="70" r="1.8"/>
+    <circle cx="980" cy="130" r="1.1"/><circle cx="1240" cy="60" r="1.5"/><circle cx="1500" cy="140" r="1.3"/>
+    <circle cx="1740" cy="80" r="1.7"/><circle cx="300" cy="240" r="1"/><circle cx="1120" cy="220" r="1"/>
+    <circle cx="1620" cy="260" r="1.2"/><circle cx="860" cy="300" r=".9"/><circle cx="520" cy="330" r=".8"/>
+  </g>
+  <!-- 太阳与霞光 -->
+  <ellipse cx="1180" cy="705" rx="420" ry="300" fill="url(#sun)" opacity=".85" filter="url(#hz)"/>
+  <circle cx="1180" cy="712" r="46" fill="#fff3d0" filter="url(#hz2)"/>
+  <!-- 云带 -->
+  <g fill="#ffffff" opacity=".18" filter="url(#hz)">
+    <ellipse cx="500" cy="470" rx="380" ry="26"/><ellipse cx="1400" cy="520" rx="440" ry="22"/>
+    <ellipse cx="900" cy="400" rx="300" ry="16"/>
+  </g>
+  <!-- 远山 -->
+  <path d="M0 700 L 240 566 L 420 660 L 640 500 L 900 690 L 1120 590 L 1380 700 L 1620 560 L 1920 680 L 1920 760 L 0 760 Z" fill="url(#m1)" opacity=".9"/>
+  <path d="M0 760 L 300 640 L 560 740 L 820 610 L 1080 750 L 1340 660 L 1600 770 L 1920 690 L 1920 820 L 0 820 Z" fill="url(#m2)"/>
+  <path d="M0 830 L 260 760 L 520 830 L 760 745 L 1040 840 L 1300 770 L 1580 850 L 1920 780 L 1920 900 L 0 900 Z" fill="url(#m3)"/>
+  <!-- 湖面 -->
+  <rect y="880" width="1920" height="200" fill="url(#lake)"/>
+  <ellipse cx="1180" cy="900" rx="300" ry="30" fill="#ffd79a" opacity=".28" filter="url(#hz)"/>
+  <g opacity=".2" fill="#fff">
+    <rect x="1000" y="930" width="360" height="3" rx="1.5"/><rect x="1060" y="965" width="240" height="2.5" rx="1"/>
+    <rect x="980" y="1000" width="400" height="2" rx="1"/><rect x="1100" y="1035" width="170" height="2" rx="1"/>
+  </g>
+  <rect width="1920" height="1080" filter="url(#gr3)" opacity=".55" style="mix-blend-mode:overlay"/>
+</svg>

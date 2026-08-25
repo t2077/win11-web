@@ -1,0 +1,69 @@
+/* ============================================================
+   contextmenu.css — Windows 11 上下文菜单
+   ============================================================ */
+
+.ctx-menu {
+  position: absolute;
+  min-width: 190px; max-width: 340px;
+  padding: 4px;
+  border-radius: var(--r-lg);
+  background-color: var(--menu-tint);
+  backdrop-filter: var(--acrylic-blur);
+  -webkit-backdrop-filter: var(--acrylic-blur);
+  box-shadow: var(--shadow-flyout), inset 0 0 0 1px var(--stroke-surface);
+  outline: none;
+  will-change: transform, opacity;
+}
+.ctx-menu--wide { min-width: 260px; }
+
+/* 顶部图标条（剪切/复制/重命名/共享/删除） */
+.ctx-iconbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2px; padding: 2px 2px 6px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--stroke-divider);
+}
+.ctx-iconbtn {
+  width: 38px; height: 34px; border-radius: var(--r-sm);
+  display: grid; place-items: center; color: var(--text-primary);
+  transition: background-color var(--dur-fast) linear, transform var(--dur-fast) var(--ease-decel);
+}
+.ctx-iconbtn:hover { background: var(--fill-subtle-hover); }
+.ctx-iconbtn:active { background: var(--fill-subtle-press); transform: scale(.94); }
+.ctx-iconbtn:disabled { color: var(--text-disabled); }
+.ctx-iconbtn.is-danger:hover { color: #ff99a4; }
+[data-theme="light"] .ctx-iconbtn.is-danger:hover { color: #c42b1c; }
+
+.mi {
+  display: flex; align-items: center; gap: 0;
+  height: 32px; padding: 0 12px 0 0;
+  border-radius: var(--r-sm);
+  color: var(--text-primary);
+  font-size: var(--fs-body);
+  cursor: default;
+  position: relative;
+  transition: background-color var(--dur-fast) linear;
+  outline: none;
+}
+.ctx-menu--compact .mi { height: 28px; }
+.mi:hover, .mi:focus-visible { background: var(--fill-subtle-hover); }
+.mi:active { background: var(--fill-subtle-press); }
+.mi.is-subopen { background: var(--fill-subtle-hover); }
+.mi.is-disabled { color: var(--text-disabled); pointer-events: none; }
+.mi.is-danger { color: #ff99a4; }
+[data-theme="light"] .mi.is-danger { color: #c42b1c; }
+.mi__icon { width: 16px; height: 16px; margin: 0 12px; flex: none; display: grid; place-items: center; opacity: .95; }
+.mi.is-disabled .mi__icon { opacity: .4; }
+.mi__label { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mi__accel { margin-left: 24px; color: var(--text-tertiary); font-size: var(--fs-caption); flex: none; }
+.mi__chev { width: 12px; height: 12px; margin-left: 12px; color: var(--text-secondary); flex: none; }
+.mi__chev svg { width: 12px; height: 12px; }
+.mi.is-checked .mi__icon { color: var(--text-primary); }
+
+.ctx-sep { height: 1px; margin: 4px 8px; background: var(--stroke-divider); }
+.ctx-header {
+  padding: 6px 12px 4px 40px; font-size: var(--fs-caption); color: var(--text-tertiary);
+}
+
+/* 菜单里的"显示更多选项"（Win11 特有） */
+.mi--more .mi__label { color: var(--text-primary); }
