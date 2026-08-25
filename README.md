@@ -1,14 +1,12 @@
+## 🎨 原创作者 · B站 [Annore](https://space.bilibili.com/447553626)
+
+> **作者 B站用户名：Annore**
+> B站主页：https://space.bilibili.com/447553626
+> 尊重原作者的劳动成果，转载 / 二创请在显眼处保留此署名。
+
 # Windows 11 Web — Win11 网页版
 
 纯前端（无构建、无框架、无 npm）的 Windows 11 桌面复刻，直接打开 `index.html` 即可体验。
-
-## ⭐ 原创作者
-
-> **本项目由 B站 UP 主 创作 / 维护，请保留原作者署名并注明出处。**
->
-> 原作者 B站 空间：[https://space.bilibili.com/447553626](https://space.bilibili.com/447553626)
->
-> 尊重劳动成果，转载 / 二创请在显眼处保留此声明。
 
 ## ✨ 功能特性
 
@@ -50,5 +48,5 @@ win11-web/
 
 ## 📄 版权与许可
 
-原作者：B站 UP 主 [space.bilibili.com/447553626](https://space.bilibili.com/447553626)。
+作者：B站 UP 主 **Annore**，主页 [space.bilibili.com/447553626](https://space.bilibili.com/447553626)。
 如原作者另有明确开源协议，以原作者声明为准；使用本项目请注明出处。
